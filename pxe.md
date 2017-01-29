@@ -45,7 +45,7 @@ subnet 192.168.202.0 netmask 255.255.255.0{
 
 >//make changes as above in dhcpd.conf 
 
-#Configure DHCP server:
+#Start DHCP server:
 >service dhcpd start		//to start dhcpd
 >chkconfig dhcpd on		//start automatic on boot
 >chkconfig	--list	dhcpd		//to check if on auto on boot or not
