@@ -1,0 +1,20 @@
+﻿Pros:
+	1. Right plateform and guidance to Team Members.
+	2. Team achievements will motivate other girls to enhance 		   their technical skills.
+	3. Team will learn and work on OpenSource Technologies.
+	4. Increament in Technical Skills and Learning Curve.
+	5. Participation in TechEvents and Hackathons.
+
+Cons:
+	1. May effect college attendance and grades.
+Syllabus:
+Competitive Programming (In C/CPP Language)
+OOPs Concepts (In Java)
+Web Development (HTML5, CSS3, JS, XML, JSON, PHP, JQuery, Angular, Node, JSP, ASP)
+Database (MySQL, NoSQL, Oracle)
+App Dev (Android, Ionic-Hybrid, Swift)
+Software Development (Java, DotNet, Python)
+Game Development (C++, OpenGL, WebGL, Unity, Construct2, Python)
+Networking (IP Addressing, Subnetting, Routing)
+Linux (Administration Basics, Servers)
+Cloud (AWS, OpenStack, Google Plateform)

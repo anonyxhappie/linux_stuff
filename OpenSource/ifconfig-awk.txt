@@ -1,0 +1,4 @@
+ifconfig wlan0
+ifconfig wlan0 | grep HWaddr | awk '{print $5}'
+ifconfig wlan0 | grep HWaddr | awk '{print $3}' | awk -F ":" '{print $2}'
+ifconfig wlan0 | grep inet | awk '{print $2}' | awk -F ":" '{print $2}'
