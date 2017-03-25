@@ -1,6 +1,5 @@
 setenforce 0 &> /dev/null
-touch /tmp/ip
-ifconfig eth0 | grep Bcast | awk '{ print $2 }' | awk -F ":" '{ print $2 }' > /tmp/ip
+ip=$(ifconfig eth0 | grep Bcast | awk '{ print $2 }' | awk -F ":" '{ print $2 }')
 echo "$ip www.anonyx.local" >> /etc/hosts
 hostname www.anonyx.local
 yum install -y httpd* &> /dev/null
