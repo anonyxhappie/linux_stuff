@@ -16,17 +16,17 @@ if [ $a -eq 0 ] && [ $b -eq 0 ] && [ $c -eq 0 ]; then
 	echo "Pass."
 	exit
 fi
-grep "soni" /tmp/exam/user_list_$ip &>> /tmp/exam/flogs
+grep "ram" /tmp/exam/user_list_$ip &>> /tmp/exam/flogs
 a1=$? # 0 for pass
-grep "ankush" /tmp/exam/user_list_$ip &>> /tmp/exam/flogs
+grep "sham" /tmp/exam/user_list_$ip &>> /tmp/exam/flogs
 a2=$? # 0 for pass
-grep "soni" /tmp/exam/ftpusers_$ip &>> /tmp/exam/flogs
-a3=$? # 1 for pass
-grep "ankush" /tmp/exam/ftpusers_$ip &>> /tmp/exam/flogs
-a4=$? # 1 for pass
+grep "ram" /tmp/exam/ftpusers_$ip &>> /tmp/exam/flogs
+a3=$? # 0 for pass
+grep "sham" /tmp/exam/ftpusers_$ip &>> /tmp/exam/flogs
+a4=$? # 0 for pass
 grep "userlist_deny=NO" /tmp/exam/vsftpd.conf_$ip &>> /tmp/exam/flogs
-a5=$? # 0 for pass
-if [ $a1 -eq 0 ] && [ $a2 -eq 0 ] && [ $a3 -eq 1 ] && [ $a4 -eq 1 ] && [ $a5 -eq 0 ]; then
+a5=$? # 1 for pass
+if [ $a3 -eq 0 ] && [ $a4 -eq 0 ] || [ $a1 -eq 0 ] && [ $a2 -eq 0 ] && [ $a5 -eq 1 ]; then
 	echo "Pass."
 else 
 	echo "Fail."

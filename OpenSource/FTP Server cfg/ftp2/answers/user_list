@@ -4,7 +4,7 @@
 # do not even prompt for a password.
 # Note that the default vsftpd pam config also checks /etc/vsftpd/ftpusers
 # for users that are denied.
-#root
+root
 bin
 daemon
 adm
