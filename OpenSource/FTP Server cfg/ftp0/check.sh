@@ -1,31 +1,32 @@
 # Answers Check Script
 echo "Give Candidate IP : "
 read ip
-touch /logs &> /dev/null
-mkdir ~/exam &>> /logs
-scp 192.168.1.$ip:/etc/vsftpd/user_list ~/exam/user_list_$ip &>> /logs
-diff ~/exam/user_list_$ip ~/answers/user_list &>> /logs
+mkdir /tmp/exam &> /dev/null
+touch /tmp/exam/flogs &> /dev/null
+scp 192.168.1.$ip:/etc/vsftpd/user_list /tmp/exam/user_list_$ip &>> /tmp/exam/flogs
+diff /tmp/exam/user_list_$ip answers/user_list &>> /tmp/exam/flogs
 a=$?
-scp 192.168.1.$ip:/etc/vsftpd/ftpusers ~/exam/ftpusers_$ip &>> /logs
-diff ~/exam/ftpusers_$ip ~/answers/ftpusers &>> /logs
+scp 192.168.1.$ip:/etc/vsftpd/ftpusers /tmp/exam/ftpusers_$ip &>> /tmp/exam/flogs
+diff /tmp/exam/ftpusers_$ip answers/ftpusers &>> /tmp/exam/flogs
 b=$?
-scp 192.168.1.$ip:/etc/vsftpd/vsftpd.conf ~/exam/vsftpd.conf_$ip &>> /logs
-diff ~/exam/vsftpd.conf_$ip ~/answers/vsftpd.conf &>> /logs
+scp 192.168.1.$ip:/etc/vsftpd/vsftpd.conf /tmp/exam/vsftpd.conf_$ip &>> /tmp/exam/flogs
+diff /tmp/exam/vsftpd.conf_$ip answers/vsftpd.conf &>> /tmp/exam/flogs
 c=$?
 if [ $a -eq 0 ] && [ $b -eq 0 ] && [ $c -eq 0 ]; then
 	echo "Pass."
 	exit
 fi
-grep "#root" ~/exam/user_list_$ip &>> /logs
+grep "#root" /tmp/exam/user_list_$ip &>> /tmp/exam/flogs
 a=$?
-grep "#root" ~/exam/ftpusers_$ip &>> /logs
+grep "#root" /tmp/exam/ftpusers_$ip &>> /tmp/exam/flogs
 b=$?
-grep "root" ~/exam/user_list_$ip &>> /logs
+grep "root" /tmp/exam/user_list_$ip &>> /tmp/exam/flogs
 c=$?
-grep "root" ~/exam/ftpusers_$ip &>> /logs
+grep "root" /tmp/exam/ftpusers_$ip &>> /tmp/exam/flogs
 d=$?
 if [ $a -eq 0 ] || [ $c -eq 1 ] && [ $b -eq 0 ] || [ $d -eq 1 ]; then
-	echo "Pass."
-else 
-	echo "Fail."
+        echo "Pass."
+else
+        echo "Fail."
 fi
+
