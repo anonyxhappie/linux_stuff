@@ -40,12 +40,16 @@ part / --fstype="ext4" --size=3000
 %end
 %post
 echo "FTP:" > /root/q.txt
-echo "only anonymous should be able to download." >> /root/q.txt
+echo "1. Download all txt files from ftp as anonymous." >> /root/q.txt
+echo "2. Upload ~/q.txt to ftp server as anonymous." >> /root/q.txt
+echo "3. Default permissions of uploaded file should be -rwxr--r--." >> /root/q.txt
 yum install vsftpd* -y &> /dev/null
 touch /var/ftp/pub/{1..5}.txt &> /dev/null
-chmod 000 -R /var/ftp/pub &> /dev/null
-sed 's/userlist_enable=YES/userlist_enable=NO/g' -i.bak /etc/vsftpd/vsftpd.conf &> /dev/null
-echo "anonymous" >> /etc/vsftpd/ftpusers &> /dev/null
-rm -f /etc/vsftpd/vstpd.conf.bak &> /dev/null
-chmod 444 -R /etc/vsftpd &> /dev/null
+chmod 111 /var/ftp/pub &> /dev/null
+sed 's/anonymous_enable=YES/anonymous_enable=NO/g' -i.bak /etc/vsftpd/vsftpd.conf
+sed 's/write_enable=YES/write_enable=NO/g' -i.bak /etc/vsftpd/vsftpd.conf
+sed 's/local_enable=YES/local_enable=NO/g' -i.bak /etc/vsftpd/vsftpd.conf
+sed 's/local_umask=022/local_umask=333/g' -i.bak /etc/vsftpd/vsftpd.conf
+echo "anonymous" >> /etc/vsftpd/user_list
+rm -f /etc/vsftpd/vstpd.conf.bak
 %end

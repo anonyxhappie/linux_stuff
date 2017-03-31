@@ -13,7 +13,7 @@ b=$?
 scp 192.168.1.$ip:/etc/vsftpd/vsftpd.conf /tmp/exam/vsftpd.conf_$ip &>> /tmp/exam/flogs
 diff /tmp/exam/vsftpd.conf_$ip answers/vsftpd.conf &>> /tmp/exam/flogs
 c=$?
-if [ $(ls -ld /root/5.txt | awk '{ print $1 }') == '-rwxr--r--.' ]; then p=1; else p=0; fi
+if [ $(ls -ld /var/ftp/pub/q.txt | awk '{ print $1 }') == '-rwxr--r--.' ]; then p=1; else p=0; fi
 if [ $a -eq 0 ] && [ $b -eq 0 ] && [ $c -eq 0 ] && [ $p -eq 1 ]; then
 	echo "Perfect."
 	exit
