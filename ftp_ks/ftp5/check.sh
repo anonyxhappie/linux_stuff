@@ -1,4 +1,4 @@
-# Answers Check Script
+# Answers Check Script for ftp5
 echo "Give Candidate IP : "
 read ip
 rm -rf /tmp/exam &> /dev/null
@@ -13,21 +13,19 @@ b=$?
 scp 192.168.1.$ip:/etc/vsftpd/vsftpd.conf /tmp/exam/vsftpd.conf_$ip &>> /tmp/exam/flogs
 diff /tmp/exam/vsftpd.conf_$ip answers/vsftpd.conf &>> /tmp/exam/flogs
 c=$?
-if [ $a -eq 0 ] && [ $b -eq 0 ] && [ $c -eq 0 ]; then
-	echo "Pass."
+if [ $(ls -ld /root/5.txt | awk '{ print $1 }') == '-rwxr--r--.' ]; then p=1; else p=0; fi
+if [ $a -eq 0 ] && [ $b -eq 0 ] && [ $c -eq 0 ] && [ $p -eq 1 ]; then
+	echo "Perfect."
 	exit
 fi
-grep "#root" /tmp/exam/user_list_$ip &>> /tmp/exam/flogs
-a=$?
-grep "#root" /tmp/exam/ftpusers_$ip &>> /tmp/exam/flogs
-b=$?
-grep "root" /tmp/exam/user_list_$ip &>> /tmp/exam/flogs
-c=$?
-grep "root" /tmp/exam/ftpusers_$ip &>> /tmp/exam/flogs
-d=$?
-if [ $a -eq 0 ] || [ $c -eq 1 ] && [ $b -eq 0 ] || [ $d -eq 1 ]; then
-        echo "Pass."
-else
-        echo "Fail."
+grep "anonymous" /tmp/exam/user_list_$ip &>> /tmp/exam/flogs
+a1=$? # 1 for pass
+grep "anonymous" /tmp/exam/ftpusers_$ip &>> /tmp/exam/flogs
+a3=$? # 1 for pass
+grep "userlist_deny=NO" /tmp/exam/vsftpd.conf_$ip &>> /tmp/exam/flogs
+a5=$? # 1 for pass
+if [ $a1 -eq 1 ] && [ $a3 -eq 1 ] && [ $a5 -eq 1 ] && [ $c -eq 0 ] && [ $p -eq 1 ]; then
+	echo "Pass."
+else 
+	echo "Fail."
 fi
-

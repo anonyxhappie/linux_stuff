@@ -1,4 +1,4 @@
-# Answers Check Script
+# Answers Check Script for ftp6
 echo "Give Candidate IP : "
 read ip
 rm -rf /tmp/exam &> /dev/null
@@ -14,18 +14,22 @@ scp 192.168.1.$ip:/etc/vsftpd/vsftpd.conf /tmp/exam/vsftpd.conf_$ip &>> /tmp/exa
 diff /tmp/exam/vsftpd.conf_$ip answers/vsftpd.conf &>> /tmp/exam/flogs
 c=$?
 if [ $a -eq 0 ] && [ $b -eq 0 ] && [ $c -eq 0 ]; then
-	echo "Pass."
+	echo "Perfect."
 	exit
 fi
-grep "root" /tmp/exam/user_list_$ip &>> /tmp/exam/flogs
+grep "anonymous" /tmp/exam/user_list_$ip &>> /tmp/exam/flogs
 a1=$? # 0 for pass
-grep "#root" /tmp/exam/ftpusers_$ip &>> /tmp/exam/flogs
-a2=$? # 0 for pass
-grep "root" /tmp/exam/ftpusers_$ip &>> /tmp/exam/flogs
+grep "anonymous" /tmp/exam/ftpusers_$ip &>> /tmp/exam/flogs
 a3=$? # 1 for pass
 grep "userlist_deny=NO" /tmp/exam/vsftpd.conf_$ip &>> /tmp/exam/flogs
 a4=$? # 0 for pass
-if [ $a1 -eq 0 ] && [ $a2 -eq 0 ] && [ $a3 -eq 1 ] && [ $a4 -eq 0 ]; then
+grep "userlist_enable=YES" /tmp/exam/vsftpd.conf_$ip &>> /tmp/exam/flogs
+a5=$? # 0 for pass
+grep "write_enable=NO" /tmp/exam/vsftpd.conf_$ip &>> /tmp/exam/flogs
+a6=$? # 0 for pass
+grep "#write_enable=YES" /tmp/exam/vsftpd.conf_$ip &>> /tmp/exam/flogs
+a7=$? # 0 for pass
+if [ $a1 -eq 0 ] && [ $a3 -eq 1 ] && [ $a4 -eq 0 ] && [ $a5 -eq 0 ] && [ $a6 -eq 0 ] || [ $a7 -eq 0 ]; then
 	echo "Pass."
 else 
 	echo "Fail."

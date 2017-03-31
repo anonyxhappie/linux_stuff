@@ -1,6 +1,7 @@
 # Answers Check Script
 echo "Give Candidate IP : "
 read ip
+rm -rf /tmp/exam &> /dev/null
 mkdir /tmp/exam &> /dev/null
 touch /tmp/exam/flogs &> /dev/null
 scp 192.168.1.$ip:/etc/vsftpd/user_list /tmp/exam/user_list_$ip &>> /tmp/exam/flogs
