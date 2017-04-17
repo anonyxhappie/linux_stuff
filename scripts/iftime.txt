@@ -1,0 +1,1 @@
+if [ $(date | awk '{ print $4 }' | awk -F ":" '{ print $1 }') -eq 4 ]; then echo equal; else echo not equal; fi
