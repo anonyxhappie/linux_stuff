@@ -1,0 +1,1 @@
+virt-install --name myrhel6 --ram 2048 --vcpu 1 --cdrom /mnt/iso/CentOS-6.9-x86_64-minimal.iso --disk path=/var/lib/libvirt/images/myrhel6.img,size=6 --os-type linux --os-variant rhel6 --hvm
