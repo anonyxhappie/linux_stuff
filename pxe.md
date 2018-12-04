@@ -1,10 +1,10 @@
-###Preboot eXecution Environment Installation
-##SERVER -->
-#Configure Network:
+### Preboot eXecution Environment Installation
+## SERVER -->
+# Configure Network:
 >--Server-->192.168.202.1/24(static)
 >--Client-->192.168.202.2-254/24(DHCP)
 
-#Configure Yum  Repo Via DVD:
+# Configure Yum  Repo Via DVD:
 >Insert DVD
 >mount     //to check
 >umount     /dev/sr0
@@ -16,7 +16,7 @@
 	gpgcheck=0
 >yum repolist     //to check
 
-#Install required Packages:
+# Install required Packages:
 >yum  -y  install  dhcp  tftp-server  syslinux  (httpd  vsftpd  nfs-utils)  system-config-kickstart
 >yum  -y  install  dhcp  tftp-server  syslinux  vsftpd  system-config-kickstart
 
@@ -25,7 +25,7 @@
 
 
 
-#Configure DHCP server:
+# Configure DHCP server:
 default-lease-time 600;
 max-lease-time 1200;
 
@@ -45,14 +45,14 @@ subnet 192.168.202.0 netmask 255.255.255.0{
 
 >//make changes as above in dhcpd.conf 
 
-#Start DHCP server:
+# Start DHCP server:
 >service dhcpd start		//to start dhcpd
 >chkconfig dhcpd on		//start automatic on boot
 >chkconfig	--list	dhcpd		//to check if on auto on boot or not
 
 
 
-#Configure TFTP server:
+# Configure TFTP server:
 >vi	/etc/xinetd.d/tftp
 	disable=no		//by default it is disabled
 save & exit
@@ -61,25 +61,25 @@ save & exit
 >cp	/var/lib/tftpboot/isolinux.cfg		/var/lib/tftpboot/pxelinux.cfg/default
 >cp	/usr/share/syslinux/pxelinux.0	/var/lib/tftpboot/
 
-#Start TFTP server:
+# Start TFTP server:
 >service	xinetd		start
 >chkconfig	xinetd		on
 
-#Configure FTP server:
+# Configure FTP server:
 >cp	-vr	/media/*	/var/ftp/pub
 >vi 	/etc/vsftpd/vsftpd.conf
 	//anon_root=/rhel6//just check anonymous user is enabled/yes
 
-#Start FTP server:
+# Start FTP server:
 >service vsftpd start
 >chkconfig	vsftpd		start
  
-#Selinux & Firewall off:
+# Selinux & Firewall off:
 >setenforce 0
 >system-config-firewall	or 	setup
 
-//Just crosscheck all servers are started & PXE SERVER IS READY..................!!!!
-##Client -->
+// Just crosscheck all servers are started & PXE SERVER IS READY..................!!!!
+## Client -->
 (LAN card must be PXE compatible)
 >Set PXE 1st priority or choose from boot order on system start.
 >System starts network OS -> Press [TAB]
